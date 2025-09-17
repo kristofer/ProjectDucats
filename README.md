@@ -6,6 +6,10 @@ A project expense tracker iOS app for managing project-based expenses with recei
 
 Project Ducats helps you track expenses across multiple projects, providing a clear view of project costs and spending patterns. Each project maintains its own ledger of expenses, with the ability to capture and store receipt photos for proper documentation.
 
+![Ducats MVP](./Ducats/DucatsMVP.png)
+
+_MVP Screenshot_
+
 ## Features
 
 - **Project Management**: Create and manage multiple projects
@@ -76,7 +80,7 @@ The app follows standard SwiftUI + SwiftData architecture:
 ## Notes
 
 on 17 sept 2025, I spent 1:40 creating the app from scratch to an MVP state with SwiftData models, project and expense management, receipt capture, and basic UI. Further enhancements and polish will be done in future iterations.
-![Ducats MVP](./Ducats/DucatsMVP.png)
+
 
 
 
