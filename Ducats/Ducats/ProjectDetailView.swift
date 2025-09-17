@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import PhotosUI
 
 struct ProjectDetailView: View {
     @Environment(\.modelContext) private var modelContext
@@ -18,6 +19,10 @@ struct ProjectDetailView: View {
     @State private var editDesc: String = ""
     @State private var editWhere: String = ""
     @State private var editWhat: String = ""
+    @State private var newReceiptImage: PhotosPickerItem? = nil
+    @State private var newReceiptImageData: Data? = nil
+    @State private var editReceiptImage: PhotosPickerItem? = nil
+    @State private var editReceiptImageData: Data? = nil
 
     enum SortOrder: String, CaseIterable, Identifiable {
         case dateDescending = "Date ↓"
@@ -101,6 +106,7 @@ struct ProjectDetailView: View {
                         editDesc = expense.desc
                         editWhere = expense.whereMade
                         editWhat = expense.whatPurchased
+                        editReceiptImageData = expense.receiptImageData
                     }) {
                         VStack(alignment: .leading) {
                             Text("$\(expense.amount, specifier: "%.2f")")
@@ -113,6 +119,25 @@ struct ProjectDetailView: View {
                                 .font(.caption2)
                             Text("What: \(expense.whatPurchased)")
                                 .font(.caption2)
+                            if let imageData = expense.receiptImageData {
+                                #if canImport(UIKit)
+                                if let uiImage = UIImage(data: imageData) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 100)
+                                        .cornerRadius(8)
+                                }
+                                #elseif canImport(AppKit)
+                                if let nsImage = NSImage(data: imageData) {
+                                    Image(nsImage: nsImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 100)
+                                        .cornerRadius(8)
+                                }
+                                #endif
+                            }
                         }
                     }
                     .buttonStyle(.plain)
@@ -131,6 +156,39 @@ struct ProjectDetailView: View {
                     TextField("Description", text: $newDesc)
                     TextField("Where", text: $newWhere)
                     TextField("What", text: $newWhat)
+                    if let imageData = newReceiptImageData {
+                        #if canImport(UIKit)
+                        if let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 100)
+                                .cornerRadius(8)
+                        }
+                        #elseif canImport(AppKit)
+                        if let nsImage = NSImage(data: imageData) {
+                            Image(nsImage: nsImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 100)
+                                .cornerRadius(8)
+                        }
+                        #endif
+                        Button("Remove Receipt Image") {
+                            newReceiptImageData = nil
+                        }
+                    }
+                    PhotosPicker(selection: $newReceiptImage, matching: .images) {
+                        Text(newReceiptImageData == nil ? "Add Receipt Image" : "Change Receipt Image")
+                    }
+                    .onChange(of: newReceiptImage) { item in
+                        guard let item else { return }
+                        Task {
+                            if let data = try? await item.loadTransferable(type: Data.self) {
+                                newReceiptImageData = data
+                            }
+                        }
+                    }
                     HStack {
                         Button("Cancel") {
                             showAddExpense = false
@@ -138,10 +196,12 @@ struct ProjectDetailView: View {
                             newDesc = ""
                             newWhere = ""
                             newWhat = ""
+                            newReceiptImageData = nil
+                            newReceiptImage = nil
                         }
                         Button("Save") {
                             if let amount = Double(newAmount) {
-                                let expense = Expense(amount: amount, description: newDesc, project: project, whereMade: newWhere, whatPurchased: newWhat)
+                                let expense = Expense(amount: amount, description: newDesc, receiptImageData: newReceiptImageData, project: project, whereMade: newWhere, whatPurchased: newWhat)
                                 project.expenses.append(expense)
                                 try? modelContext.save()
                             }
@@ -150,6 +210,8 @@ struct ProjectDetailView: View {
                             newDesc = ""
                             newWhere = ""
                             newWhat = ""
+                            newReceiptImageData = nil
+                            newReceiptImage = nil
                         }
                     }
                 }
@@ -166,6 +228,39 @@ struct ProjectDetailView: View {
                 TextField("Description", text: $editDesc)
                 TextField("Where", text: $editWhere)
                 TextField("What", text: $editWhat)
+                if let imageData = editReceiptImageData {
+                    #if canImport(UIKit)
+                    if let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 100)
+                            .cornerRadius(8)
+                    }
+                    #elseif canImport(AppKit)
+                    if let nsImage = NSImage(data: imageData) {
+                        Image(nsImage: nsImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 100)
+                            .cornerRadius(8)
+                    }
+                    #endif
+                    Button("Remove Receipt Image") {
+                        editReceiptImageData = nil
+                    }
+                }
+                PhotosPicker(selection: $editReceiptImage, matching: .images) {
+                    Text(editReceiptImageData == nil ? "Add Receipt Image" : "Change Receipt Image")
+                }
+                .onChange(of: editReceiptImage) { item in
+                    guard let item else { return }
+                    Task {
+                        if let data = try? await item.loadTransferable(type: Data.self) {
+                            editReceiptImageData = data
+                        }
+                    }
+                }
                 HStack {
                     Button("Cancel") {
                         editingExpense = nil
@@ -176,6 +271,7 @@ struct ProjectDetailView: View {
                             expense.desc = editDesc
                             expense.whereMade = editWhere
                             expense.whatPurchased = editWhat
+                            expense.receiptImageData = editReceiptImageData
                             try? modelContext.save()
                         }
                         editingExpense = nil
