@@ -57,7 +57,7 @@ struct ProjectDetailView: View {
                     Text("New Expense")
                         .font(.headline)
                     TextField("Amount", text: $newAmount)
-                        .keyboardType(.decimalPad)
+                        //.keyboardType(.decimalPad)
                     TextField("Description", text: $newDesc)
                     HStack {
                         Button("Cancel") {
