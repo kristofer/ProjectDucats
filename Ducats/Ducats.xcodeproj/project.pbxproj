@@ -34,6 +34,7 @@
 		5CDEC2672E7B518E0027FD82 /* DucatsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DucatsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CDEC27D2E7B577B0027FD82 /* PLAN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = PLAN.md; path = ../PLAN.md; sourceTree = SOURCE_ROOT; };
 		5CDEC27E2E7B577B0027FD82 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
+		5CDEC2832E7B62F40027FD82 /* DucatsMVP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DucatsMVP.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -95,6 +96,7 @@
 		5CDEC2402E7B518C0027FD82 = {
 			isa = PBXGroup;
 			children = (
+				5CDEC2832E7B62F40027FD82 /* DucatsMVP.png */,
 				5CDEC27D2E7B577B0027FD82 /* PLAN.md */,
 				5CDEC27E2E7B577B0027FD82 /* README.md */,
 				5CDEC24B2E7B518C0027FD82 /* Ducats */,

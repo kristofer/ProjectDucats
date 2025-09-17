@@ -76,5 +76,7 @@ The app follows standard SwiftUI + SwiftData architecture:
 ## Notes
 
 on 17 sept 2025, I spent 1:40 creating the app from scratch to an MVP state with SwiftData models, project and expense management, receipt capture, and basic UI. Further enhancements and polish will be done in future iterations.
+![Ducats MVP](./Screenshots/ProjectDucats-MainView.png)
+
 
 
