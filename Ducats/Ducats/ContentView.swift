@@ -13,6 +13,7 @@ struct ContentView: View {
     @Query private var projects: [Project]
     @State private var showCompletedProjects = false
     @State private var showCompletedOnly = false
+    @State private var selectedProject: Project? = nil
 
     var filteredProjects: [Project] {
         showCompletedOnly ? projects.filter { $0.completed } : projects.filter { !$0.completed }
@@ -21,11 +22,9 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             VStack {
-                List {
+                List(selection: $selectedProject) {
                     ForEach(filteredProjects) { project in
-                        NavigationLink {
-                            ProjectDetailView(project: project)
-                        } label: {
+                        NavigationLink(value: project) {
                             VStack(alignment: .leading) {
                                 Text(project.name)
                                     .font(.headline)
@@ -40,6 +39,9 @@ struct ContentView: View {
                 }
                 Toggle("Show Completed Projects", isOn: $showCompletedOnly)
                     .padding(.horizontal)
+                    .onChange(of: showCompletedOnly) { _,_ in
+                        selectedProject = nil
+                    }
             }
 #if os(macOS)
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
@@ -57,7 +59,11 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            Text("Select a project")
+            if let project = selectedProject {
+                ProjectDetailView(project: project)
+            } else {
+                Text("Select a project")
+            }
         }
     }
 
