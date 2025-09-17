@@ -11,23 +11,35 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var projects: [Project]
+    @State private var showCompletedProjects = false
+    @State private var showCompletedOnly = false
+
+    var filteredProjects: [Project] {
+        showCompletedOnly ? projects.filter { $0.completed } : projects.filter { !$0.completed }
+    }
 
     var body: some View {
         NavigationSplitView {
-            List {
-                ForEach(projects) { project in
-                    NavigationLink {
-                        ProjectDetailView(project: project)
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(project.name)
-                                .font(.headline)
-                            Text(project.createdAt, format: Date.FormatStyle(date: .numeric, time: .standard))
-                                .font(.caption)
+            VStack {
+                List {
+                    ForEach(filteredProjects) { project in
+                        NavigationLink {
+                            ProjectDetailView(project: project)
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(project.name)
+                                    .font(.headline)
+                                Text(project.details)
+                                    .font(.subheadline)
+                                Text(project.createdAt, format: Date.FormatStyle(date: .numeric, time: .standard))
+                                    .font(.caption)
+                            }
                         }
                     }
+                    .onDelete(perform: deleteProjects)
                 }
-                .onDelete(perform: deleteProjects)
+                Toggle("Show Completed Projects", isOn: $showCompletedOnly)
+                    .padding(.horizontal)
             }
 #if os(macOS)
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)

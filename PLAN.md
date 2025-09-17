@@ -19,6 +19,7 @@ This plan outlines the phases and tasks required to build the Project Ducats exp
 - Associate expenses with projects
 - Build expense list and detail views
 - Add sorting and filtering for expenses
+- Calculate and display expense totals per project
 
 ## Phase 4: Receipt Capture & Management
 - Integrate camera/photo picker for receipt capture

@@ -14,12 +14,14 @@ final class Project {
     var name: String
     var details: String
     var createdAt: Date
+    var completed: Bool = false
     @Relationship(deleteRule: .cascade) var expenses: [Expense] = []
     
-    init(name: String, details: String = "", createdAt: Date = Date()) {
+    init(name: String, details: String = "", createdAt: Date = Date(), completed: Bool = false) {
         self.name = name
         self.details = details
         self.createdAt = createdAt
+        self.completed = completed
     }
 }
 
@@ -29,13 +31,17 @@ final class Expense {
     var date: Date
     var desc: String
     var receiptImageData: Data?
+    var whereMade: String
+    var whatPurchased: String
     @Relationship var project: Project?
     
-    init(amount: Double, date: Date = Date(), description: String = "", receiptImageData: Data? = nil, project: Project? = nil) {
+    init(amount: Double, date: Date = Date(), description: String = "", receiptImageData: Data? = nil, project: Project? = nil, whereMade: String = "", whatPurchased: String = "") {
         self.amount = amount
         self.date = date
         self.desc = description
         self.receiptImageData = receiptImageData
         self.project = project
+        self.whereMade = whereMade
+        self.whatPurchased = whatPurchased
     }
 }
