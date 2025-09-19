@@ -23,6 +23,12 @@ struct ProjectDetailView: View {
     @State private var newReceiptImageData: Data? = nil
     @State private var editReceiptImage: PhotosPickerItem? = nil
     @State private var editReceiptImageData: Data? = nil
+    @State private var viewingReceiptImageData: Data? = nil
+    @State private var showExportError = false
+    @State private var exportErrorMessage = ""
+    @State private var showExportSuccess = false
+    @State private var exportSuccessMessage = ""
+    @State private var activityItems: [Any]? = nil
 
     enum SortOrder: String, CaseIterable, Identifiable {
         case dateDescending = "Date ↓"
@@ -81,6 +87,10 @@ struct ProjectDetailView: View {
                     }
                 }
                 .buttonStyle(.bordered)
+                Button("Export CSV") {
+                    exportCSV()
+                }
+                .buttonStyle(.bordered)
             }
             Divider()
             Text("Ledger")
@@ -137,6 +147,10 @@ struct ProjectDetailView: View {
                                         .cornerRadius(8)
                                 }
                                 #endif
+                                Button("View Receipt") {
+                                    viewingReceiptImageData = imageData
+                                }
+                                .buttonStyle(.bordered)
                             }
                         }
                     }
@@ -283,6 +297,17 @@ struct ProjectDetailView: View {
             }
             .padding()
         }
+        .sheet(isPresented: Binding<Bool>(get: { viewingReceiptImageData != nil }, set: { if !$0 { viewingReceiptImageData = nil } })) {
+            if let imageData = viewingReceiptImageData {
+                ZoomableImageView(imageData: imageData)
+            }
+        }
+        .alert(isPresented: $showExportError) {
+            Alert(title: Text("Export Failed"), message: Text(exportErrorMessage), dismissButton: .default(Text("OK")))
+        }
+        .alert(isPresented: $showExportSuccess) {
+            Alert(title: Text("Export Successful"), message: Text(exportSuccessMessage), dismissButton: .default(Text("OK")))
+        }
     }
 
     private func deleteExpenses(offsets: IndexSet) {
@@ -294,6 +319,48 @@ struct ProjectDetailView: View {
             }
         }
         try? modelContext.save()
+    }
+
+    private func exportCSV() {
+        let expenses = project.expenses ?? []
+        let header = "Amount,Date,Description,Where,What\n"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let rows = expenses.map { expense in
+            let amount = String(format: "%.2f", expense.amount)
+            let date = dateFormatter.string(from: expense.date)
+            let desc = expense.desc.replacingOccurrences(of: ",", with: " ")
+            let whereMade = expense.whereMade.replacingOccurrences(of: ",", with: " ")
+            let whatPurchased = expense.whatPurchased.replacingOccurrences(of: ",", with: " ")
+            return "\(amount),\(date),\(desc),\(whereMade),\(whatPurchased)"
+        }.joined(separator: "\n")
+        let csvString = header + rows + "\n"
+        let sanitizedName = project.name.replacingOccurrences(of: "[^A-Za-z0-9_-]", with: "_", options: .regularExpression)
+        let fileName = sanitizedName + ".csv"
+        #if os(macOS)
+        let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+        let fileURL = downloadsURL.appendingPathComponent(fileName)
+        do {
+            try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+            exportSuccessMessage = "\(fileName) was saved to your Downloads folder."
+            showExportSuccess = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                showExportSuccess = false
+            }
+        } catch {
+            exportErrorMessage = "Failed to write CSV: \(error.localizedDescription)"
+            showExportError = true
+        }
+        #else
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+        do {
+            try csvString.write(to: tempURL, atomically: true, encoding: .utf8)
+            activityItems = [tempURL]
+        } catch {
+            exportErrorMessage = "Failed to write CSV: \(error.localizedDescription)"
+            showExportError = true
+        }
+        #endif
     }
 }
 
@@ -307,3 +374,109 @@ extension Binding where Value == String? {
     let project = Project(name: "Preview Project", details: "Preview details")
     return ProjectDetailView(project: project)
 }
+
+struct ZoomableImageView: View {
+    let imageData: Data
+    @State private var scale: CGFloat = 1.0
+    @State private var offset: CGSize = .zero
+    @GestureState private var gestureScale: CGFloat = 1.0
+    @GestureState private var gestureOffset: CGSize = .zero
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        #if os(macOS)
+        VStack(spacing: 0) {
+            HStack {
+                Spacer()
+                Button("Done") { dismiss() }
+                    .padding()
+            }
+            GeometryReader { geometry in
+                Group {
+                    if let nsImage = NSImage(data: imageData) {
+                        Image(nsImage: nsImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .scaleEffect(scale * gestureScale)
+                            .offset(x: offset.width + gestureOffset.width, y: offset.height + gestureOffset.height)
+                            .gesture(
+                                SimultaneousGesture(
+                                    MagnificationGesture()
+                                        .updating($gestureScale) { value, state, _ in
+                                            state = value
+                                        }
+                                        .onEnded { value in
+                                            scale *= value
+                                        },
+                                    DragGesture()
+                                        .updating($gestureOffset) { value, state, _ in
+                                            state = value.translation
+                                        }
+                                        .onEnded { value in
+                                            offset.width += value.translation.width
+                                            offset.height += value.translation.height
+                                        }
+                                )
+                            )
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                    }
+                }
+            }
+            .frame(minWidth: 600, minHeight: 600)
+        }
+        .background(Color.black.opacity(0.95))
+        .ignoresSafeArea()
+        #else
+        GeometryReader { geometry in
+            Group {
+                if let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .scaleEffect(scale * gestureScale)
+                        .offset(x: offset.width + gestureOffset.width, y: offset.height + gestureOffset.height)
+                        .gesture(
+                            SimultaneousGesture(
+                                MagnificationGesture()
+                                    .updating($gestureScale) { value, state, _ in
+                                        state = value
+                                    }
+                                    .onEnded { value in
+                                        scale *= value
+                                    },
+                                DragGesture()
+                                    .updating($gestureOffset) { value, state, _ in
+                                        state = value.translation
+                                    }
+                                    .onEnded { value in
+                                        offset.width += value.translation.width
+                                        offset.height += value.translation.height
+                                    }
+                            )
+                        )
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                }
+            }
+        }
+        .background(Color.black.opacity(0.9))
+        .ignoresSafeArea()
+        #endif
+    }
+}
+
+//struct ActivityView: UIViewControllerRepresentable {
+//    var activityItems: [Any]
+//    var completion: (() -> Void)?
+//
+//    func makeUIViewController(context: Context) -> UIActivityViewController {
+//        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+//        controller.completionWithItemsHandler = { _, completed, _, _ in
+//            if completed {
+//                completion?()
+//            }
+//        }
+//        return controller
+//    }
+//
+//    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+//}

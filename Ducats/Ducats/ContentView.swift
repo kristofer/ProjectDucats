@@ -37,7 +37,7 @@ struct ContentView: View {
                     }
                     .onDelete(perform: deleteProjects)
                 }
-                Toggle("Show Completed Projects", isOn: $showCompletedOnly)
+                Toggle("Completed Projects", isOn: $showCompletedOnly)
                     .padding(.horizontal)
                     .onChange(of: showCompletedOnly) { _,_ in
                         selectedProject = nil
