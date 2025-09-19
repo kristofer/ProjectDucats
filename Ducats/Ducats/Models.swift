@@ -11,11 +11,11 @@ import SwiftData
 // Only model definitions below
 @Model
 final class Project {
-    var name: String
-    var details: String
-    var createdAt: Date
+    var name: String = ""
+    var details: String = ""
+    var createdAt: Date = Date()
     var completed: Bool = false
-    @Relationship(deleteRule: .cascade) var expenses: [Expense] = []
+    @Relationship(deleteRule: .cascade) var expenses: [Expense]? = nil
     
     init(name: String, details: String = "", createdAt: Date = Date(), completed: Bool = false) {
         self.name = name
@@ -27,13 +27,13 @@ final class Project {
 
 @Model
 final class Expense {
-    var amount: Double
-    var date: Date
-    var desc: String
+    var amount: Double = 0.0
+    var date: Date = Date()
+    var desc: String = ""
     var receiptImageData: Data?
-    var whereMade: String
-    var whatPurchased: String
-    @Relationship var project: Project?
+    var whereMade: String = ""
+    var whatPurchased: String = ""
+    @Relationship var project: Project? = nil
     
     init(amount: Double, date: Date = Date(), description: String = "", receiptImageData: Data? = nil, project: Project? = nil, whereMade: String = "", whatPurchased: String = "") {
         self.amount = amount

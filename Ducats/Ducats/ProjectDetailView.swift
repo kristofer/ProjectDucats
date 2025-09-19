@@ -33,7 +33,7 @@ struct ProjectDetailView: View {
     }
 
     var sortedFilteredExpenses: [Expense] {
-        var filtered = project.expenses.filter { filterText.isEmpty || $0.desc.localizedCaseInsensitiveContains(filterText) }
+        var filtered = (project.expenses ?? []).filter { filterText.isEmpty || $0.desc.localizedCaseInsensitiveContains(filterText) }
         switch sortOrder {
         case .dateDescending:
             filtered.sort { $0.date > $1.date }
@@ -48,7 +48,7 @@ struct ProjectDetailView: View {
     }
 
     var totalAmount: Double {
-        project.expenses.reduce(0) { $0 + $1.amount }
+        (project.expenses ?? []).reduce(0) { $0 + $1.amount }
     }
 
     var body: some View {
@@ -202,7 +202,10 @@ struct ProjectDetailView: View {
                         Button("Save") {
                             if let amount = Double(newAmount) {
                                 let expense = Expense(amount: amount, description: newDesc, receiptImageData: newReceiptImageData, project: project, whereMade: newWhere, whatPurchased: newWhat)
-                                project.expenses.append(expense)
+                                if project.expenses == nil {
+                                    project.expenses = []
+                                }
+                                project.expenses?.append(expense)
                                 try? modelContext.save()
                             }
                             showAddExpense = false
@@ -283,10 +286,12 @@ struct ProjectDetailView: View {
     }
 
     private func deleteExpenses(offsets: IndexSet) {
+        guard let _ = project.expenses else { return }
         for index in offsets {
-            let expense = project.expenses[index]
-            project.expenses.remove(at: index)
-            modelContext.delete(expense)
+            if let expense = project.expenses?[index] {
+                project.expenses?.remove(at: index)
+                modelContext.delete(expense)
+            }
         }
         try? modelContext.save()
     }

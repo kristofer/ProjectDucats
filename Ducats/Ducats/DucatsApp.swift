@@ -14,14 +14,19 @@ struct DucatsApp: App {
         let schema = Schema([
             Project.self, Expense.self,
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
+        
+        let modelConfiguration = ModelConfiguration(schema: schema,
+            isStoredInMemoryOnly: false,
+            allowsSave: true
+        )
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }
+        
     }()
+
 
     var body: some Scene {
         WindowGroup {
