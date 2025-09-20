@@ -28,7 +28,8 @@ struct ProjectDetailView: View {
     @State private var exportErrorMessage = ""
     @State private var showExportSuccess = false
     @State private var exportSuccessMessage = ""
-    @State private var activityItems: [Any]? = nil
+    @State private var showDocumentPicker = false
+    @State private var exportfileObj: ExportFile? = nil
 
     enum SortOrder: String, CaseIterable, Identifiable {
         case dateDescending = "Date ↓"
@@ -302,6 +303,27 @@ struct ProjectDetailView: View {
                 ZoomableImageView(imageData: imageData)
             }
         }
+#if os(iOS)
+        .sheet(isPresented: Binding<Bool>(
+            get: { showDocumentPicker && exportfileObj != nil },
+            set: { newValue in
+                showDocumentPicker = newValue
+                if !newValue { exportfileObj = nil }
+            })
+        ) {
+            if let exportfile = exportfileObj {
+                Text(String(describing: exportfile.url))
+                DocumentPickerView(exportFile: exportfile) {
+                    print("DocumentPickerView dismissed")
+                    showDocumentPicker = false
+                    exportfileObj = nil
+                }
+            } else {
+                Text("No file to export")
+            }
+        }
+#endif
+
         .alert(isPresented: $showExportError) {
             Alert(title: Text("Export Failed"), message: Text(exportErrorMessage), dismissButton: .default(Text("OK")))
         }
@@ -351,16 +373,23 @@ struct ProjectDetailView: View {
             exportErrorMessage = "Failed to write CSV: \(error.localizedDescription)"
             showExportError = true
         }
-        #else
+#else
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
         do {
             try csvString.write(to: tempURL, atomically: true, encoding: .utf8)
-            activityItems = [tempURL]
+            exportfileObj = ExportFile(url: tempURL) // Set file object first
+            print("Prepared file at \(tempURL)")
+            DispatchQueue.main.async {
+                editingExpense = nil
+                viewingReceiptImageData = nil
+                showAddExpense = false
+                showDocumentPicker = true // Only set flag after file object is ready
+            }
         } catch {
             exportErrorMessage = "Failed to write CSV: \(error.localizedDescription)"
             showExportError = true
         }
-        #endif
+#endif
     }
 }
 
@@ -464,21 +493,7 @@ struct ZoomableImageView: View {
     }
 }
 
-// add something
-
-//struct ActivityView: UIViewControllerRepresentable {
-//    var activityItems: [Any]
-//    var completion: (() -> Void)?
-//
-//    func makeUIViewController(context: Context) -> UIActivityViewController {
-//        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-//        controller.completionWithItemsHandler = { _, completed, _, _ in
-//            if completed {
-//                completion?()
-//            }
-//        }
-//        return controller
-//    }
-//
-//    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
-//}
+struct ExportFile: Identifiable {
+    let id = UUID()
+    let url: URL
+}
