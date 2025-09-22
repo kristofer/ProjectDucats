@@ -10,5 +10,9 @@
 		<string>processing</string>
 		<string>fetch</string>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+    <string>com.codehavn.Dreki.processing</string>
+    </array>
 </dict>
 </plist>

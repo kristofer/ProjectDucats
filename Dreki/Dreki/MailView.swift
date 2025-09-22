@@ -45,7 +45,7 @@ struct MailView: View {
 struct MailView: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentation
     var subject: String
-    var body: String
+    var contents: String
     var recipients: [String]?
     var attachmentData: Data?
     var attachmentMimeType: String
@@ -67,7 +67,7 @@ struct MailView: UIViewControllerRepresentable {
         let vc = MFMailComposeViewController()
         vc.mailComposeDelegate = context.coordinator
         vc.setSubject(subject)
-        vc.setMessageBody(body, isHTML: false)
+        vc.setMessageBody(contents, isHTML: false)
         if let recipients = recipients {
             vc.setToRecipients(recipients)
         }
