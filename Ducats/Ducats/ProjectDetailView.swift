@@ -30,6 +30,8 @@ struct ProjectDetailView: View {
     @State private var exportSuccessMessage = ""
     @State private var showDocumentPicker = false
     @State private var exportfileObj: ExportFile? = nil
+    @State private var showMailView = false
+    @State private var mailAttachment: MailAttachment? = nil
 
     enum SortOrder: String, CaseIterable, Identifiable {
         case dateDescending = "Date ↓"
@@ -90,6 +92,10 @@ struct ProjectDetailView: View {
                 .buttonStyle(.bordered)
                 Button("Export CSV") {
                     exportCSV()
+                }
+                .buttonStyle(.bordered)
+                Button("Email CSV") {
+                    prepareAndShowMailView()
                 }
                 .buttonStyle(.bordered)
             }
@@ -330,6 +336,16 @@ struct ProjectDetailView: View {
         .alert(isPresented: $showExportSuccess) {
             Alert(title: Text("Export Successful"), message: Text(exportSuccessMessage), dismissButton: .default(Text("OK")))
         }
+        .sheet(item: $mailAttachment, onDismiss: { mailAttachment = nil }) { attachment in
+            MailView(
+                subject: "Project Expenses CSV",
+                body: "Attached is the CSV file for project \(project.name).",
+                recipients: nil,
+                attachmentData: attachment.data,
+                attachmentMimeType: "text/csv",
+                attachmentFileName: attachment.fileName
+            )
+        }
     }
 
     private func deleteExpenses(offsets: IndexSet) {
@@ -343,7 +359,7 @@ struct ProjectDetailView: View {
         try? modelContext.save()
     }
 
-    private func exportCSV() {
+    private func makeCSVString() -> String {
         let expenses = project.expenses ?? []
         let header = "Amount,Date,Description,Where,What\n"
         let dateFormatter = DateFormatter()
@@ -356,7 +372,11 @@ struct ProjectDetailView: View {
             let whatPurchased = expense.whatPurchased.replacingOccurrences(of: ",", with: " ")
             return "\(amount),\(date),\(desc),\(whereMade),\(whatPurchased)"
         }.joined(separator: "\n")
-        let csvString = header + rows + "\n"
+        return header + rows + "\n"
+    }
+
+    private func exportCSV() {
+        let csvString = makeCSVString()
         let sanitizedName = project.name.replacingOccurrences(of: "[^A-Za-z0-9_-]", with: "_", options: .regularExpression)
         let fileName = sanitizedName + ".csv"
         #if os(macOS)
@@ -373,7 +393,7 @@ struct ProjectDetailView: View {
             exportErrorMessage = "Failed to write CSV: \(error.localizedDescription)"
             showExportError = true
         }
-#else
+        #else
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
         do {
             try csvString.write(to: tempURL, atomically: true, encoding: .utf8)
@@ -389,7 +409,20 @@ struct ProjectDetailView: View {
             exportErrorMessage = "Failed to write CSV: \(error.localizedDescription)"
             showExportError = true
         }
-#endif
+        #endif
+    }
+
+    private func prepareAndShowMailView() {
+        let csvString = makeCSVString()
+        print("CSV String for email:", csvString)
+        let sanitizedName = project.name.replacingOccurrences(of: "[^A-Za-z0-9_-]", with: "_", options: .regularExpression)
+        let fileName = sanitizedName + ".csv"
+        if let data = csvString.data(using: .utf8) {
+            mailAttachment = MailAttachment(data: data, fileName: fileName)
+        } else {
+            exportErrorMessage = "Failed to encode CSV for email."
+            showExportError = true
+        }
     }
 }
 
@@ -496,4 +529,10 @@ struct ZoomableImageView: View {
 struct ExportFile: Identifiable {
     let id = UUID()
     let url: URL
+}
+
+struct MailAttachment: Identifiable {
+    let id = UUID()
+    let data: Data
+    let fileName: String
 }
