@@ -66,7 +66,7 @@ struct ProjectDetailView: View {
                 TextField("Details", text: $project.details)
                     .font(.body)
                 Toggle("Completed", isOn: $project.completed)
-                    .onChange(of: project.completed) { _ in
+                    .onChange(of: project.completed) {
                         try? modelContext.save()
                     }
             } else {
@@ -196,10 +196,10 @@ struct ProjectDetailView: View {
                     PhotosPicker(selection: $newReceiptImage, matching: .images) {
                         Text(newReceiptImageData == nil ? "Add Receipt Image" : "Change Receipt Image")
                     }
-                    .onChange(of: newReceiptImage) { item in
-                        guard let item else { return }
+                    .onChange(of: newReceiptImage) {
+                        guard let newReceiptImage else { return }
                         Task {
-                            if let data = try? await item.loadTransferable(type: Data.self) {
+                            if let data = try? await newReceiptImage.loadTransferable(type: Data.self) {
                                 newReceiptImageData = data
                             }
                         }
@@ -271,10 +271,10 @@ struct ProjectDetailView: View {
                 PhotosPicker(selection: $editReceiptImage, matching: .images) {
                     Text(editReceiptImageData == nil ? "Add Receipt Image" : "Change Receipt Image")
                 }
-                .onChange(of: editReceiptImage) { item in
-                    guard let item else { return }
+                .onChange(of: editReceiptImage) {
+                    guard let editReceiptImage else { return }
                     Task {
-                        if let data = try? await item.loadTransferable(type: Data.self) {
+                        if let data = try? await editReceiptImage.loadTransferable(type: Data.self) {
                             editReceiptImageData = data
                         }
                     }
