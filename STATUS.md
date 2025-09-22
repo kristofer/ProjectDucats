@@ -1,6 +1,6 @@
-# Project Ducats STATUS
+# Project Dreki STATUS
 
-This file summarizes all changes made to the Project Ducats expense tracker app during this development session (as of September 17, 2025).
+This file summarizes all changes made to the Project Dreki expense tracker app during this development session (as of September 17, 2025).
 
 ## Model Changes
 - **Expense Model**: Added two new fields:

@@ -9,7 +9,7 @@ import UIKit
 #if os(macOS)
 struct MailView: View {
     var subject: String
-    var body: String
+    var contents: String
     var recipients: [String]?
     var attachmentData: Data?
     var attachmentMimeType: String
@@ -24,8 +24,8 @@ struct MailView: View {
         if !subject.isEmpty {
             queryItems.append("subject=" + subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
         }
-        if !body.isEmpty {
-            queryItems.append("body=" + body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
+        if !contents.isEmpty {
+            queryItems.append("body=" + contents.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
         }
         if !queryItems.isEmpty {
             urlString += "?" + queryItems.joined(separator: "&")

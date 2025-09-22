@@ -1,12 +1,12 @@
-# Project Ducats
+# Project Dreki
 
 A project expense tracker iOS app for managing project-based expenses with receipt capture and ledger management.
 
 ## Overview
 
-Project Ducats helps you track expenses across multiple projects, providing a clear view of project costs and spending patterns. Each project maintains its own ledger of expenses, with the ability to capture and store receipt photos for proper documentation.
+Project Dreki helps you track expenses across multiple projects, providing a clear view of project costs and spending patterns. Each project maintains its own ledger of expenses, with the ability to capture and store receipt photos for proper documentation.
 
-![Ducats MVP](./Ducats/DucatsMVP.png)
+![Dreki MVP](./Dreki/DrekiMVP.png)
 
 _MVP Screenshot_
 
@@ -80,7 +80,3 @@ The app follows standard SwiftUI + SwiftData architecture:
 ## Notes
 
 on 17 sept 2025, I spent 1:40 creating the app from scratch to an MVP state with SwiftData models, project and expense management, receipt capture, and basic UI. Further enhancements and polish will be done in future iterations.
-
-
-
-

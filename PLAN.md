@@ -1,6 +1,6 @@
-# Project Ducats Development Plan
+# Project Dreki Development Plan
 
-This plan outlines the phases and tasks required to build the Project Ducats expense tracker app, based on the features and architecture described in README.md.
+This plan outlines the phases and tasks required to build the Project Dreki expense tracker app, based on the features and architecture described in README.md.
 
 ## Phase 1: Project Setup & Architecture
 - Initialize Xcode project with SwiftUI and SwiftData

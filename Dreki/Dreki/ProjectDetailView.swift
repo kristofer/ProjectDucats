@@ -339,7 +339,7 @@ struct ProjectDetailView: View {
         .sheet(item: $mailAttachment, onDismiss: { mailAttachment = nil }) { attachment in
             MailView(
                 subject: "Project Expenses CSV",
-                body: "Attached is the CSV file for project \(project.name).",
+                contents: "Attached is the CSV file for project \(project.name).",
                 recipients: nil,
                 attachmentData: attachment.data,
                 attachmentMimeType: "text/csv",
