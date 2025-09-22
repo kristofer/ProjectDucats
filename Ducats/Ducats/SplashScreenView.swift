@@ -5,11 +5,11 @@ struct SplashScreenView: View {
         ZStack {
             Color("AccentColor").ignoresSafeArea()
             VStack {
-                Image("AppImage")
+                Image("Dreki2Icon")
                     .resizable()
                     .frame(width: 128, height: 128)
                     .cornerRadius(24)
-                Text("Ducats")
+                Text("Project Expenses")
                     .font(.title)
                     .foregroundColor(.white)
             }

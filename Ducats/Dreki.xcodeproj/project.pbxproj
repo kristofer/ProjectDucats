@@ -29,21 +29,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5CDEC2492E7B518C0027FD82 /* Ducats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ducats.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CDEC25D2E7B518E0027FD82 /* DucatsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DucatsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CDEC2672E7B518E0027FD82 /* DucatsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DucatsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CDEC2492E7B518C0027FD82 /* Dreki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dreki.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CDEC25D2E7B518E0027FD82 /* DrekiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrekiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CDEC2672E7B518E0027FD82 /* DrekiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrekiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CDEC27D2E7B577B0027FD82 /* PLAN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = PLAN.md; path = ../PLAN.md; sourceTree = SOURCE_ROOT; };
 		5CDEC27E2E7B577B0027FD82 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
 		5CDEC2832E7B62F40027FD82 /* DucatsMVP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DucatsMVP.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		5CDEC26F2E7B518E0027FD82 /* Exceptions for "Ducats" folder in "Ducats" target */ = {
+		5CDEC26F2E7B518E0027FD82 /* Exceptions for "Ducats" folder in "Dreki" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 5CDEC2482E7B518C0027FD82 /* Ducats */;
+			target = 5CDEC2482E7B518C0027FD82 /* Dreki */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -51,7 +51,7 @@
 		5CDEC24B2E7B518C0027FD82 /* Ducats */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				5CDEC26F2E7B518E0027FD82 /* Exceptions for "Ducats" folder in "Ducats" target */,
+				5CDEC26F2E7B518E0027FD82 /* Exceptions for "Ducats" folder in "Dreki" target */,
 			);
 			path = Ducats;
 			sourceTree = "<group>";
@@ -109,9 +109,9 @@
 		5CDEC24A2E7B518C0027FD82 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5CDEC2492E7B518C0027FD82 /* Ducats.app */,
-				5CDEC25D2E7B518E0027FD82 /* DucatsTests.xctest */,
-				5CDEC2672E7B518E0027FD82 /* DucatsUITests.xctest */,
+				5CDEC2492E7B518C0027FD82 /* Dreki.app */,
+				5CDEC25D2E7B518E0027FD82 /* DrekiTests.xctest */,
+				5CDEC2672E7B518E0027FD82 /* DrekiUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,9 +119,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5CDEC2482E7B518C0027FD82 /* Ducats */ = {
+		5CDEC2482E7B518C0027FD82 /* Dreki */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5CDEC2702E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "Ducats" */;
+			buildConfigurationList = 5CDEC2702E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "Dreki" */;
 			buildPhases = (
 				5CDEC2452E7B518C0027FD82 /* Sources */,
 				5CDEC2462E7B518C0027FD82 /* Frameworks */,
@@ -134,16 +134,16 @@
 			fileSystemSynchronizedGroups = (
 				5CDEC24B2E7B518C0027FD82 /* Ducats */,
 			);
-			name = Ducats;
+			name = Dreki;
 			packageProductDependencies = (
 			);
 			productName = Ducats;
-			productReference = 5CDEC2492E7B518C0027FD82 /* Ducats.app */;
+			productReference = 5CDEC2492E7B518C0027FD82 /* Dreki.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5CDEC25C2E7B518E0027FD82 /* DucatsTests */ = {
+		5CDEC25C2E7B518E0027FD82 /* DrekiTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5CDEC2752E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "DucatsTests" */;
+			buildConfigurationList = 5CDEC2752E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "DrekiTests" */;
 			buildPhases = (
 				5CDEC2592E7B518E0027FD82 /* Sources */,
 				5CDEC25A2E7B518E0027FD82 /* Frameworks */,
@@ -157,16 +157,16 @@
 			fileSystemSynchronizedGroups = (
 				5CDEC2602E7B518E0027FD82 /* DucatsTests */,
 			);
-			name = DucatsTests;
+			name = DrekiTests;
 			packageProductDependencies = (
 			);
 			productName = DucatsTests;
-			productReference = 5CDEC25D2E7B518E0027FD82 /* DucatsTests.xctest */;
+			productReference = 5CDEC25D2E7B518E0027FD82 /* DrekiTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5CDEC2662E7B518E0027FD82 /* DucatsUITests */ = {
+		5CDEC2662E7B518E0027FD82 /* DrekiUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5CDEC2782E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "DucatsUITests" */;
+			buildConfigurationList = 5CDEC2782E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "DrekiUITests" */;
 			buildPhases = (
 				5CDEC2632E7B518E0027FD82 /* Sources */,
 				5CDEC2642E7B518E0027FD82 /* Frameworks */,
@@ -180,11 +180,11 @@
 			fileSystemSynchronizedGroups = (
 				5CDEC26A2E7B518E0027FD82 /* DucatsUITests */,
 			);
-			name = DucatsUITests;
+			name = DrekiUITests;
 			packageProductDependencies = (
 			);
 			productName = DucatsUITests;
-			productReference = 5CDEC2672E7B518E0027FD82 /* DucatsUITests.xctest */;
+			productReference = 5CDEC2672E7B518E0027FD82 /* DrekiUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -210,7 +210,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5CDEC2442E7B518C0027FD82 /* Build configuration list for PBXProject "Ducats" */;
+			buildConfigurationList = 5CDEC2442E7B518C0027FD82 /* Build configuration list for PBXProject "Dreki" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -224,9 +224,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5CDEC2482E7B518C0027FD82 /* Ducats */,
-				5CDEC25C2E7B518E0027FD82 /* DucatsTests */,
-				5CDEC2662E7B518E0027FD82 /* DucatsUITests */,
+				5CDEC2482E7B518C0027FD82 /* Dreki */,
+				5CDEC25C2E7B518E0027FD82 /* DrekiTests */,
+				5CDEC2662E7B518E0027FD82 /* DrekiUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -284,12 +284,12 @@
 /* Begin PBXTargetDependency section */
 		5CDEC25F2E7B518E0027FD82 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5CDEC2482E7B518C0027FD82 /* Ducats */;
+			target = 5CDEC2482E7B518C0027FD82 /* Dreki */;
 			targetProxy = 5CDEC25E2E7B518E0027FD82 /* PBXContainerItemProxy */;
 		};
 		5CDEC2692E7B518E0027FD82 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5CDEC2482E7B518C0027FD82 /* Ducats */;
+			target = 5CDEC2482E7B518C0027FD82 /* Dreki */;
 			targetProxy = 5CDEC2682E7B518E0027FD82 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -302,7 +302,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Ducats/Ducats.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Ducats/Preview Content\"";
 				DEVELOPMENT_TEAM = S7ZKK95T9U;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -323,7 +323,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codehavn.Ducats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -342,7 +342,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Ducats/Ducats.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Ducats/Preview Content\"";
 				DEVELOPMENT_TEAM = S7ZKK95T9U;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -363,7 +363,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codehavn.Ducats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -431,6 +431,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Ducats;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -485,6 +486,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = Ducats;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -507,7 +509,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ducats.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Ducats";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dreki.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dreki";
 				XROS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Debug;
@@ -530,7 +532,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ducats.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Ducats";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dreki.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dreki";
 				XROS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Release;
@@ -582,7 +584,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5CDEC2442E7B518C0027FD82 /* Build configuration list for PBXProject "Ducats" */ = {
+		5CDEC2442E7B518C0027FD82 /* Build configuration list for PBXProject "Dreki" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5CDEC2732E7B518E0027FD82 /* Debug */,
@@ -591,7 +593,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5CDEC2702E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "Ducats" */ = {
+		5CDEC2702E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "Dreki" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5CDEC2712E7B518E0027FD82 /* Debug */,
@@ -600,7 +602,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5CDEC2752E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "DucatsTests" */ = {
+		5CDEC2752E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "DrekiTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5CDEC2762E7B518E0027FD82 /* Debug */,
@@ -609,7 +611,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5CDEC2782E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "DucatsUITests" */ = {
+		5CDEC2782E7B518E0027FD82 /* Build configuration list for PBXNativeTarget "DrekiUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5CDEC2792E7B518E0027FD82 /* Debug */,
